@@ -3,6 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="A simple, professional lead capture form to quickly format and copy lead details. Ideal for sales representatives and data entry.">
+    <meta name="keywords" content="lead capture, sales form, data entry, copy to clipboard, lead generator, business tools">
+    <meta name="author" content="Muhammad Meluk @ EvoStatic">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Lead Generator Form">
+    <meta property="og:description" content="Quickly capture and format lead details with this simple tool.">
+    <meta property="og:image" content="assets/og-image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.png">
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DVYGBNZ62W"></script>
     <script>
@@ -12,7 +28,9 @@
 
       gtag('config', 'G-DVYGBNZ62W');
     </script>
-    <title>Lead Generator Form</title>
+    
+    <title>Lead Generator Form - Quick Data Entry Tool</title>
+    
     <!-- Tailwind CSS for professional styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Phosphor Icons -->
@@ -75,14 +93,16 @@
 </head>
 <body class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 
-    <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+    <!-- Using <main> tag for better SEO semantics -->
+    <main class="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg border border-gray-100">
         <div class="text-center">
             <div class="mx-auto h-12 w-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mb-4">
                 <i class="ph ph-clipboard-text text-2xl"></i>
             </div>
-            <h2 class="mt-2 text-3xl font-extrabold text-gray-900">
+            <!-- Changed h2 to h1 for SEO hierarchy -->
+            <h1 class="mt-2 text-3xl font-extrabold text-gray-900">
                 Lead Details
-            </h2>
+            </h1>
             <p class="mt-2 text-sm text-gray-600">
                 Fill in the details below and click copy to generate a formatted snippet.
             </p>
@@ -166,7 +186,7 @@
                 </button>
             </div>
         </form>
-    </div>
+    </main>
 
     <!-- Toast Notification -->
     <div id="toast" class="toast flex items-center justify-center gap-2">
