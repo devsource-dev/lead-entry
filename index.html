@@ -103,9 +103,6 @@
             <h1 class="mt-2 text-3xl font-extrabold text-gray-900">
                 Lead Details
             </h1>
-            <p class="mt-2 text-sm text-gray-600">
-                Fill in the details below and click copy to generate a formatted snippet.
-            </p>
         </div>
 
         <form class="mt-8 space-y-5" id="leadForm" onsubmit="event.preventDefault();">
@@ -259,23 +256,35 @@ Price: ${price}`;
             }, 3000);
         }
 
-        // Phone Number Formatting Logic
-        const phoneInput = document.getElementById('phone');
-        
-        phoneInput.addEventListener('input', function (e) {
-            const input = e.target.value.replace(/\D/g, '').substring(0, 10); // Strip non-digits & limit to 10
-            const zip = input.substring(0, 3);
-            const middle = input.substring(3, 6);
-            const last = input.substring(6, 10);
+// Phone Number Formatting Logic
+const phoneInput = document.getElementById('phone');
 
-            if (input.length > 6) {
-                e.target.value = `(${zip}) ${middle}-${last}`;
-            } else if (input.length > 3) {
-                e.target.value = `(${zip}) ${middle}`;
-            } else if (input.length > 0) {
-                e.target.value = `(${zip}`;
-            }
-        });
+phoneInput.addEventListener('input', function (e) {
+    let input = e.target.value;
+    
+    // Remove all non-digits including the + sign
+    let digits = input.replace(/\D/g, '');
+    
+    // Remove leading 1 (country code) if present and we have 11 digits
+    if (digits.length === 11 && digits.startsWith('1')) {
+        digits = digits.substring(1); // Remove the first digit (1)
+    }
+    
+    // Now format the remaining 10 digits
+    const zip = digits.substring(0, 3);
+    const middle = digits.substring(3, 6);
+    const last = digits.substring(6, 10);
+
+    if (digits.length > 6) {
+        e.target.value = `(${zip}) ${middle}-${last}`;
+    } else if (digits.length > 3) {
+        e.target.value = `(${zip}) ${middle}`;
+    } else if (digits.length > 0) {
+        e.target.value = `(${zip}`;
+    } else {
+        e.target.value = '';
+    }
+});
     </script>
 </body>
 </html>
