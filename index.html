@@ -4,22 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO Meta Tags -->
     <meta name="description" content="A simple, professional lead capture form to quickly format and copy lead details. Ideal for sales representatives and data entry.">
     <meta name="keywords" content="lead capture, sales form, data entry, copy to clipboard, lead generator, business tools">
     <meta name="author" content="Muhammad Meluk @ EvoStatic">
     <meta name="robots" content="index, follow">
 
-    <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Lead Generator Form">
     <meta property="og:description" content="Quickly capture and format lead details with this simple tool.">
     <meta property="og:image" content="assets/og-image.png">
     
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/favicon.png">
 
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DVYGBNZ62W"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -31,11 +27,8 @@
     
     <title>Lead Generator Form - Quick Data Entry Tool</title>
     
-    <!-- Tailwind CSS for professional styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -89,17 +82,27 @@
         .input-group:focus-within i {
             color: #4f46e5;
         }
+        
+        /* Smooth fade for pricing toggle */
+        .fade-enter {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.3s ease-out, max-height 0.3s ease-out;
+        }
+        .fade-enter-active {
+            opacity: 1;
+            max-height: 100px; /* Arbitrary height large enough */
+        }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 
-    <!-- Using <main> tag for better SEO semantics -->
     <main class="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg border border-gray-100">
         <div class="text-center">
             <div class="mx-auto h-12 w-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mb-4">
                 <i class="ph ph-clipboard-text text-2xl"></i>
             </div>
-            <!-- Changed h2 to h1 for SEO hierarchy -->
             <h1 class="mt-2 text-3xl font-extrabold text-gray-900">
                 Lead Details
             </h1>
@@ -107,7 +110,6 @@
 
         <form class="mt-8 space-y-5" id="leadForm" onsubmit="event.preventDefault();">
             
-            <!-- Decision Makers Name -->
             <div class="input-group">
                 <label for="dmName" class="block text-sm font-medium text-gray-700 mb-1">Decision Maker's Name</label>
                 <div class="relative rounded-md shadow-sm">
@@ -118,7 +120,6 @@
                 </div>
             </div>
 
-            <!-- Business Name -->
             <div class="input-group">
                 <label for="businessName" class="block text-sm font-medium text-gray-700 mb-1">Business Name</label>
                 <div class="relative rounded-md shadow-sm">
@@ -129,7 +130,6 @@
                 </div>
             </div>
 
-            <!-- Email -->
             <div class="input-group">
                 <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
                 <div class="relative rounded-md shadow-sm">
@@ -140,7 +140,6 @@
                 </div>
             </div>
 
-            <!-- Phone Number -->
             <div class="input-group">
                 <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
                 <div class="relative rounded-md shadow-sm">
@@ -151,26 +150,75 @@
                 </div>
             </div>
 
-            <!-- Address -->
             <div class="input-group">
                 <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
                 <div class="relative rounded-md shadow-sm">
                     <div class="absolute top-3 left-0 pl-3 flex items-start pointer-events-none">
                         <i class="ph ph-map-pin text-gray-400 transition-colors duration-200"></i>
                     </div>
-                    <textarea id="address" rows="3" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 border" placeholder="123 Market St, San Francisco, CA"></textarea>
+                    <textarea id="address" rows="2" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 border" placeholder="123 Market St, San Francisco, CA"></textarea>
                 </div>
             </div>
 
-            <!-- Price -->
-            <div class="input-group">
-                <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Price</label>
-                <div class="relative rounded-md shadow-sm">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="ph ph-currency-dollar text-gray-400 transition-colors duration-200"></i>
+            <div class="input-group bg-gray-50 p-3 rounded-md border border-gray-200">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Pricing Model</label>
+                
+                <div class="flex items-center space-x-4 mb-2">
+                    <div class="flex items-center">
+                        <input id="priceTypeComm" name="priceType" type="radio" checked onchange="togglePriceInput()" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                        <label for="priceTypeComm" class="ml-2 block text-sm text-gray-700">
+                            15% Commission
+                        </label>
                     </div>
-                    <input type="text" id="price" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border" placeholder="1,500.00">
+                    <div class="flex items-center">
+                        <input id="priceTypeFlat" name="priceType" type="radio" onchange="togglePriceInput()" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                        <label for="priceTypeFlat" class="ml-2 block text-sm text-gray-700">
+                            Flat Rate
+                        </label>
+                    </div>
                 </div>
+
+                <div id="flatRateContainer" class="fade-enter hidden">
+                    <div class="relative rounded-md shadow-sm mt-2">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="ph ph-currency-dollar text-gray-400"></i>
+                        </div>
+                        <input type="text" id="flatPrice" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 border" placeholder="Enter Amount (e.g. 1,500)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+                <div class="input-group w-1/2">
+                    <label for="interestLevel" class="block text-sm font-medium text-gray-700 mb-1">Interest (1-10)</label>
+                    <div class="relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="ph ph-chart-bar text-gray-400"></i>
+                        </div>
+                        <input type="number" min="1" max="10" id="interestLevel" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border" placeholder="8">
+                    </div>
+                </div>
+
+                <div class="input-group w-1/2">
+                    <label for="bestTime" class="block text-sm font-medium text-gray-700 mb-1">Best Time to Call</label>
+                    <div class="relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="ph ph-clock text-gray-400"></i>
+                        </div>
+                        <input type="text" id="bestTime" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2.5 border" placeholder="2pm - 4pm EST">
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="closerNotes" class="block text-sm font-medium text-gray-700 mb-1">Details for Closer</label>
+                <div class="relative rounded-md shadow-sm">
+                    <div class="absolute top-3 left-0 pl-3 flex items-start pointer-events-none">
+                        <i class="ph ph-notepad text-gray-400 transition-colors duration-200"></i>
+                    </div>
+                    <textarea id="closerNotes" maxlength="500" rows="4" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 border" placeholder="Any relevant notes... (Max 500 chars)"></textarea>
+                </div>
+                <p class="mt-1 text-xs text-right text-gray-400">Max 500 characters</p>
             </div>
 
             <div class="pt-2 flex gap-3">
@@ -185,7 +233,6 @@
         </form>
     </main>
 
-    <!-- Toast Notification -->
     <div id="toast" class="toast flex items-center justify-center gap-2">
         <i class="ph ph-check-circle text-green-400 text-xl"></i>
         <span>Copied to clipboard successfully!</span>
@@ -196,6 +243,21 @@
             return document.getElementById(id).value.trim();
         }
 
+        // Handle Pricing Toggle Visibility
+        function togglePriceInput() {
+            const isFlat = document.getElementById('priceTypeFlat').checked;
+            const container = document.getElementById('flatRateContainer');
+            
+            if (isFlat) {
+                container.classList.remove('hidden');
+                setTimeout(() => container.classList.add('fade-enter-active'), 10);
+                document.getElementById('flatPrice').focus();
+            } else {
+                container.classList.remove('fade-enter-active');
+                setTimeout(() => container.classList.add('hidden'), 300);
+            }
+        }
+
         function copyToClipboard() {
             // 1. Gather values
             const dmName = getVal('dmName') || 'N/A';
@@ -203,29 +265,40 @@
             const email = getVal('email') || 'N/A';
             const phone = getVal('phone') || 'N/A';
             const address = getVal('address') || 'N/A';
-            const price = getVal('price') || 'N/A';
+            
+            // New Fields
+            const interest = getVal('interestLevel') || 'N/A';
+            const bestTime = getVal('bestTime') || 'N/A';
+            const notes = getVal('closerNotes') || 'None';
 
-            // 2. Format the string
+            // Pricing Logic
+            let pricingInfo = '15% Commission';
+            if (document.getElementById('priceTypeFlat').checked) {
+                const flatVal = getVal('flatPrice');
+                pricingInfo = flatVal ? `Flat Rate: ${flatVal}` : 'Flat Rate: N/A';
+            }
+
+            // 2. Format the string (Hashtag style)
             const formattedText = 
-`Decision Makers Name: ${dmName}
-Business Name: ${businessName}
-Email: ${email}
-Phone Number: ${phone}
-Address: ${address}
-Price: ${price}`;
+`# Decision Maker: ${dmName}
+# Business Name: ${businessName}
+# Email: ${email}
+# Phone: ${phone}
+# Address: ${address}
+# Pricing: ${pricingInfo}
+# Interest Level: ${interest}/10
+# Best Time to Reach: ${bestTime}
+# Notes for Closer: ${notes}`;
 
-            // 3. Copy to clipboard (Using execCommand for iframe compatibility)
-            // Create a temporary textarea element
+            // 3. Copy to clipboard
             const textArea = document.createElement("textarea");
             textArea.value = formattedText;
             
-            // Ensure it's not visible but part of the DOM
             textArea.style.position = "fixed";
             textArea.style.left = "-9999px";
             textArea.style.top = "0";
             document.body.appendChild(textArea);
             
-            // Select and Copy
             textArea.focus();
             textArea.select();
             
@@ -240,12 +313,13 @@ Price: ${price}`;
                 console.error('Fallback: Oops, unable to copy', err);
             }
             
-            // Cleanup
             document.body.removeChild(textArea);
         }
 
         function resetForm() {
             document.getElementById('leadForm').reset();
+            // Reset visibility of flat rate input to default (hidden)
+            togglePriceInput();
         }
 
         function showToast() {
@@ -256,35 +330,31 @@ Price: ${price}`;
             }, 3000);
         }
 
-// Phone Number Formatting Logic
-const phoneInput = document.getElementById('phone');
+        // Phone Number Formatting Logic
+        const phoneInput = document.getElementById('phone');
 
-phoneInput.addEventListener('input', function (e) {
-    let input = e.target.value;
-    
-    // Remove all non-digits including the + sign
-    let digits = input.replace(/\D/g, '');
-    
-    // Remove leading 1 (country code) if present and we have 11 digits
-    if (digits.length === 11 && digits.startsWith('1')) {
-        digits = digits.substring(1); // Remove the first digit (1)
-    }
-    
-    // Now format the remaining 10 digits
-    const zip = digits.substring(0, 3);
-    const middle = digits.substring(3, 6);
-    const last = digits.substring(6, 10);
+        phoneInput.addEventListener('input', function (e) {
+            let input = e.target.value;
+            let digits = input.replace(/\D/g, '');
+            
+            if (digits.length === 11 && digits.startsWith('1')) {
+                digits = digits.substring(1); 
+            }
+            
+            const zip = digits.substring(0, 3);
+            const middle = digits.substring(3, 6);
+            const last = digits.substring(6, 10);
 
-    if (digits.length > 6) {
-        e.target.value = `(${zip}) ${middle}-${last}`;
-    } else if (digits.length > 3) {
-        e.target.value = `(${zip}) ${middle}`;
-    } else if (digits.length > 0) {
-        e.target.value = `(${zip}`;
-    } else {
-        e.target.value = '';
-    }
-});
+            if (digits.length > 6) {
+                e.target.value = `(${zip}) ${middle}-${last}`;
+            } else if (digits.length > 3) {
+                e.target.value = `(${zip}) ${middle}`;
+            } else if (digits.length > 0) {
+                e.target.value = `(${zip}`;
+            } else {
+                e.target.value = '';
+            }
+        });
     </script>
 </body>
 </html>
