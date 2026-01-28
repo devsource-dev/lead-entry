@@ -53,7 +53,9 @@
                     <i class="ph-bold ph-trash"></i> Reset
                 </button>
                 
-                <div class="h-6 w-px bg-gray-200 mx-1"></div> <button onclick="copyToClipboard()" class="px-4 py-2 bg-gray-900 hover:bg-black text-white text-sm font-semibold rounded-lg shadow-md transition-all transform active:scale-[0.98] flex items-center gap-2">
+                <div class="h-6 w-px bg-gray-200 mx-1"></div>
+                
+                <button onclick="copyToClipboard()" class="px-4 py-2 bg-gray-900 hover:bg-black text-white text-sm font-semibold rounded-lg shadow-md transition-all transform active:scale-[0.98] flex items-center gap-2">
                     <i class="ph-bold ph-copy"></i>
                     <span>Copy Data</span>
                 </button>
@@ -197,7 +199,6 @@
 
         function openModal() {
             modal.classList.remove('hidden');
-            // Small timeout to allow browser to render hidden removal before adding opacity class for transition
             setTimeout(() => {
                 backdrop.classList.add('open');
                 panel.classList.add('open');
@@ -207,7 +208,6 @@
         function closeModal() {
             backdrop.classList.remove('open');
             panel.classList.remove('open');
-            // Wait for animation to finish before hiding display
             setTimeout(() => {
                 modal.classList.add('hidden');
             }, 200);
@@ -270,9 +270,20 @@
             });
         }
 
-        // Phone Formatting
+        // Phone Formatting (Updated to strip leading +1)
         document.getElementById('phone').addEventListener('input', function (e) {
-            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+            let digits = e.target.value.replace(/\D/g, '');
+            
+            // If length is 11 and starts with 1, strip the 1
+            if (digits.length === 11 && digits.startsWith('1')) {
+                digits = digits.substring(1);
+            }
+            
+            // Ensure we don't go over 10 digits after stripping
+            digits = digits.substring(0, 10);
+
+            // Format as (XXX) XXX-XXXX
+            let x = digits.match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
             e.target.value = !x[2] ? x[1] : `(${x[1]}) ${x[2]}${x[3] ? `-${x[3]}` : ''}`;
         });
     </script>
